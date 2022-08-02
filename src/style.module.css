@@ -1,0 +1,35 @@
+.red-text {
+  color: red;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex-grow: 1;
+}
+
+.output {
+  margin: 16px;
+  padding: 16px 24px;
+  border: 1px solid #616161;
+  border-radius: 8px;
+}
+
+.output-red {
+  color: red;
+  margin: 16px;
+  padding: 16px 24px;
+  border: 1px solid red;
+  border-radius: 8px;
+}
+
+.error-input {
+  border: 1px solid red;
+  border-radius: 4px;
+}
+
+.error-input:focus-visible {
+  outline: red auto 1px;
+}

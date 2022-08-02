@@ -1,0 +1,45 @@
+.red-div {
+  color: red;
+}
+
+.red-div input {
+  border: 1px solid red;
+  border-radius: 4px;
+}
+
+.red-div input:focus-visible {
+  outline: red auto 1px;
+}
+
+.shake {
+  animation-name: shaking;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-direction: alternate;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+@keyframes shaking {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
+}
