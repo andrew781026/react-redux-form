@@ -10,14 +10,14 @@ class Form extends React.PureComponent {
     super(props);
 
     const {rules}=props;
-    const {   proxyFormData,
+    const {  formId, proxyFormData,
       proxyErrMsgs,
       onFieldChange,
       validField,
       validAll,
       emitter } = getProxyForm({ rules });
 
-    this.formId = 
+    this.formId = formId
   }
 
   singleValidate = (attr, value, triggerType) => {
