@@ -15,10 +15,13 @@ class MyEventEmitter {
 }
 
 export const getProxyForm = ({ field, formId, rules, initFormData = {} }) => {
+
+  // 之後放入 redux 中預計掛在 operation 底下 ( ie : operation.forms = forms )
   const forms = {};
+  const clearForm = formId => forms[  formId] = undefined;
 
   if (rules) {
-    const tempFormId = formId || uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
+    const uuidv4 = formId || uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
 
     const formData = { ...initFormData };
     const errMsgs = {};
@@ -118,20 +121,22 @@ export const getProxyForm = ({ field, formId, rules, initFormData = {} }) => {
       validField(field, triggerType);
     };
 
-    forms[tempFormId] = {
-      formId: tempFormId,
+
+    forms[uuidv4] = {
+      formId: uuidv4,
       proxyFormData,
       proxyErrMsgs,
       onFieldChange,
       validField,
       validAll,
-      emitter
+      emitter,
+      clearForm,
     };
 
-    return { formId: tempFormId, proxyFormData, proxyErrMsgs, rules };
+    return { formId: uuidv4, proxyFormData, proxyErrMsgs, rules };
   }
 
-  if (field && formId) {
+  if (formId) {
     return forms[formId];
   }
 };

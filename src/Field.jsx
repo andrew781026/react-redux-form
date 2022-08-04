@@ -5,31 +5,43 @@ import { getProxyForm } from "./proxyForm.js";
 // mimic element-react set the rule
 class Field extends React.PureComponent {
   state = { errText: "" };
+  validField= undefined;
+  emitter= undefined;
 
   componentDidMount() {
     const { field, formId } = this.props;
-    const { validField, emitter } = getProxyForm({ field, formId });
+    const { validField, emitter,onFieldChange } = getProxyForm({ formId });
     this.validField = validField;
     this.emitter = emitter;
+    this.onFieldChange = onFieldChange;
     emitter.on(`${field}-error`, (errText) => {
-      this.setState(errText);
+      this.setState({errText});
     });
   }
 
-  render() {
-    const { children, label, attr } = this.props;
-    const { validField } = this;
+  componentWillUnmount() {
+    const { field } = this.props;
 
+    // 清除註冊的事件
+    this.emitter.destory(`${field}-error`);
+  }
+
+  render() {
+    const {  field, formId , children } = this.props;
+    const { validField,onFieldChange } = this;
+    const { errText } = this.state;
+
+    // sample of onFieldChange : onChange={ e => onFieldChange( field , e.target.value )}
     return (
       <div
-        className={this.state.errText && styles["red-div"]}
-        onChange={() => validField(attr, "change")}
-        onBlur={() => validField(attr, "blur")}
-        onDragStart={() => validField(attr, "dragStart")}
-        onDrop={() => validField(attr, "drop")}
-        onFocus={() => validField(attr, "focus")}
+        className={errText && styles["red-div"]}
+        onChange={() => validField(field, "change")}
+        onBlur={() => validField(field, "blur")}
+        onDragStart={() => validField(field, "dragStart")}
+        onDrop={() => validField(field, "drop")}
+        onFocus={() => validField(field, "focus")}
       >
-        {label}：{children}
+     {children({ field, formId, errText, onFieldChange })}
       </div>
     );
   }
